@@ -14,11 +14,11 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 # =========================
 # User config
 # =========================
-ENCODER_PORT = "COM4"
+ENCODER_PORT = "COM13"               #编码器端口号
 ENCODER_BAUD = 9600
 ENCODER_RESOLUTION = 32768          # 编码器每圈计数
 
-TTL_PORT = "COM3"                   # Arduino 串口
+TTL_PORT = "COM15"                   # Arduino 端口号
 TTL_BAUD = 115200
 
 ENCODER_TARGET_HZ = 30.0

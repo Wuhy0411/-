@@ -41,20 +41,72 @@
 按照硬件拼接教程组装好跑台，具体操作步骤请参阅[《硬件安装步骤说明》](硬件/硬件拼装流程.md)。
 
 ### 第二步：下位机程序烧录 (Arduino端)
-1. 打开 `Arduino IDE`。
-2. 导入本项目 `软件/代码` 目录下的 `TTL monitoring.ino` 源码文件。
-3. 在菜单栏选择对应的开发板型号（arduino uno）及正确识别的 COM 端口。
-4. 点击 **上传 (Upload)** 按钮，将代码烧录至控制板。
+1. 将Arduino与电脑连接
+
+   <img src="images/1.jpg" width="80%" />
+
+2. 打开 `Arduino IDE`。
+
+   <img src="images/2.png" width="80%" />
+
+3. 导入本项目 `软件/代码` 目录下的 `TTL monitoring.ino` 源码文件。
+
+   <img src="images/3.png" width="80%" />
+
+4. 在菜单栏选择对应的开发板型号（arduino uno）及正确识别的 COM 端口（如这里的COM15）。
+
+   <img src="images/4.png" width="80%" />
+
+5. 依次点击 **编译**  、**上传 (Upload)** 按钮，将代码烧录至控制板。
+
+   <img src="images/5.png" width="80%" />
+
+6. 观察到板子上的1口有红灯快速的闪烁即代表烧录成功
+
+   <img src="images/6.jpg" width="80%" />
+
+   
+
+   
 
 ### 第三步：上位机数据采集与可视化 (Python端)
-1. 打开 `VS Code`，并在终端中激活配置好的 Python 环境。
-2. 导入本项目 `软件/代码` 目录下的 `GUI.py` 源码文件。
-3. 检查串口号配置：打开设备管理器，并插入arduino的数据线和RS485转usb线，在对应的GUI.py代码修改端口号。
-4. 运行主程序开始实验。
-5. **运行现象：**
+1. 右键`软件/代码` 目录下的 `GUI.py` 源码文件，点击打开方式，选择用VS Code打开。
+
+   <img src="images/7.png" width="80%" />
+
+   <img src="images/8.png" width="40%" />
+
+2. 连接好旋转编码器
+
+   <img src="images/9.jpg" width="80%" />
+
+3. 检查串口号配置：打开设备管理器，查看端口的下拉菜单，查询到Arduino板子和编码器的端口号分别为`COM15` 和`COM13`，记住这两个端口号。
+
+   <img src="images/10.png" width="50%" />
+
+4. 找到GUI主程序的对应位置进行修改。
+
+   <img src="images/11.png" width="80%" />
+
+5. 运行主程序开始实验。
+
+   <img src="images/12.png" width="80%" />
+
+6. **运行现象：**
+
    * 终端将实时打印旋转编码器的转速和ttl信号数据。
+
+     <img src="images/13.png" width="80%" />
+
    * 点击start record按钮开始记录转速信息，点击end record结束记录。
-   * 点击右上角关闭按钮，弹出保存的csv文件，找到合适位置点击保存。
+
+   * 点击右上角关闭按钮，弹出保存的csv文件，点击`是` ，找到合适位置点击保存。
+
+     <img src="images/14.png" width="80%" />
+
+     <img src="images/15.png" width="80%" />
+
+   
 
 ---
 
@@ -63,6 +115,7 @@
 实验结束后，关闭GUI界面，会弹出一个保存csv文件的界面，选择对应的文件夹点击保存即可。
 
 **数据包含以下核心字段：**
+
 * `record_rel_s`: 相对记录时间（从点击“Start Record”到该编码器样本的时间间隔，单位秒）
 * `cpu_time_ns`: 绝对 CPU 时间戳（纳秒，用于精确对齐）
 * `raw`: 编码器原始读数（16位有符号整数，范围 -32768 ~ 32767，对应每圈 32768 个计数）
@@ -70,6 +123,8 @@
 * `distance_m`: 累计路程（米，根据 `raw` 变化量乘以轮子周长累加得到）
 * `ttl_event`: TTL 事件标记（布尔值 0 或 1，1 表示该编码器样本在时间上最接近某个 TTL 脉冲）
 * `ttl_index`: TTL 脉冲序号（当 `ttl_event = 1` 时记录对应的序号，来自 Arduino 串口；否则为空）
+
+<img src="images/16.png" width="100%" />
 
 ---
 
